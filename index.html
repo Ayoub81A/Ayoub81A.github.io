@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ayoub Hmaidi — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,900&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:       #0a0a0a;
+      --surface:  #111;
+      --border:   #1c1c1c;
+      --border2:  #272727;
+      --text:     #e8e8e0;
+      --muted:    #383838;
+      --muted2:   #606060;
+      --acid:     #c8ff00;
+      --acid-dim: rgba(200,255,0,0.08);
+      --acid-mid: rgba(200,255,0,0.18);
+      --serif:    'Fraunces', serif;
+      --mono:     'DM Mono', monospace;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--serif);
+      font-weight: 300;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--acid); }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.6rem 4rem;
+      background: rgba(10,10,10,0.94);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--acid);
+      letter-spacing: 0.12em;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: var(--muted2);
+      text-decoration: none;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--acid); }
+
+    .lang-toggle {
+      display: flex;
+      border: 1px solid var(--border2);
+      overflow: hidden;
+    }
+
+    .lang-btn {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      padding: 0.35rem 0.75rem;
+      background: transparent;
+      border: none;
+      color: var(--muted2);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .lang-btn.active {
+      background: var(--acid);
+      color: #0a0a0a;
+      font-weight: 500;
+    }
+
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 4rem 10rem;
+    }
+
+    #about {
+      padding-top: 13rem;
+      padding-bottom: 7rem;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    #about::before {
+      content: '';
+      position: absolute;
+      top: 8rem; right: -6rem;
+      width: 340px; height: 340px;
+      background: radial-gradient(circle, rgba(200,255,0,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--acid);
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      opacity: 0.75;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px; height: 1px;
+      background: var(--acid);
+    }
+
+    .hero-name {
+      font-family: var(--serif);
+      font-weight: 900;
+      font-size: clamp(4.5rem, 11vw, 8.5rem);
+      line-height: 0.87;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .hero-name .surname {
+      display: block;
+      font-style: italic;
+      /* gradient fade from acid to transparent */
+      background: linear-gradient(90deg, var(--acid) 0%, rgba(200,255,0,0.15) 60%, transparent 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .hero-title {
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      color: var(--muted2);
+      letter-spacing: 0.06em;
+      line-height: 1.9;
+      border-left: 1px solid var(--acid);
+      padding-left: 1.25rem;
+    }
+
+    .hero-bio {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(232,232,224,0.45);
+      line-height: 1.85;
+    }
+
+    .hero-links {
+      display: flex;
+      gap: 0;
+      margin-top: 3.5rem;
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+    }
+
+    .hero-link {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted2);
+      text-decoration: none;
+      padding-right: 2rem;
+      margin-right: 2rem;
+      border-right: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+
+    .hero-link:last-child { border-right: none; padding-right: 0; margin-right: 0; }
+    .hero-link:hover { color: var(--acid); }
+
+    .section {
+      padding: 7rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-header {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 2rem;
+      align-items: baseline;
+      margin-bottom: 4.5rem;
+    }
+
+    .section-num {
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      color: var(--acid);
+      letter-spacing: 0.2em;
+      opacity: 0.5;
+      padding-top: 0.4rem;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-weight: 900;
+      font-size: 2.6rem;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--acid);
+      opacity: 0.6;
+    }
+
+    .edu-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 2rem;
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+
+    .edu-item:hover { background: var(--acid-dim); margin: 0 -1.5rem; padding-left: 1.5rem; padding-right: 1.5rem; }
+
+    .edu-year {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      line-height: 1.7;
+      padding-top: 0.3rem;
+    }
+
+    .edu-degree {
+      font-family: var(--serif);
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .edu-school {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: var(--acid);
+      letter-spacing: 0.06em;
+      opacity: 0.7;
+      margin-bottom: 0.4rem;
+    }
+
+    .edu-detail {
+      font-family: var(--serif);
+      font-size: 0.88rem;
+      font-style: italic;
+      color: var(--muted2);
+    }
+
+    .skill-row {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 2rem;
+      padding: 1.75rem 0;
+      border-top: 1px solid var(--border);
+      align-items: start;
+    }
+
+    .skill-cat {
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      color: var(--muted2);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding-top: 0.2rem;
+    }
+
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      padding: 0.28rem 0.7rem;
+      border: 1px solid var(--border2);
+      color: var(--muted2);
+      letter-spacing: 0.04em;
+      transition: all 0.18s;
+      cursor: default;
+    }
+
+    .tag:hover {
+      border-color: var(--acid);
+      color: var(--acid);
+      background: var(--acid-dim);
+    }
+
+    .project-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 2rem;
+      padding: 3rem 0;
+      border-top: 1px solid var(--border);
+      position: relative;
+    }
+
+    .project-item::before {
+      content: '';
+      position: absolute;
+      left: -4rem; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--acid);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.3s ease;
+    }
+
+    .project-item:hover::before { transform: scaleY(1); }
+
+    .project-num {
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      padding-top: 0.4rem;
+    }
+
+    .project-type {
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      color: var(--acid);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.7rem;
+      opacity: 0.65;
+    }
+
+    .project-title {
+      font-family: var(--serif);
+      font-weight: 700;
+      font-size: 1.35rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.7rem;
+      line-height: 1.2;
+    }
+
+    .project-desc {
+      font-family: var(--serif);
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: rgba(232,232,224,0.38);
+      line-height: 1.75;
+      max-width: 500px;
+      margin-bottom: 1.2rem;
+    }
+
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.2rem; }
+
+    .project-links { display: flex; gap: 1.5rem; }
+
+    .project-link {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      color: var(--muted2);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .project-link::after { content: '↗'; opacity: 0.6; }
+    .project-link:hover { color: var(--acid); }
+
+    .coming-soon {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      color: var(--muted);
+      letter-spacing: 0.2em;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+      margin-top: 0.5rem;
+    }
+
+    [data-lang] { display: none; }
+    .lang-fr [data-lang="fr"],
+    .lang-en [data-lang="en"] { display: revert; }
+
+    @media (max-width: 700px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      main { padding: 0 1.5rem 6rem; }
+      #about { padding-top: 8rem; padding-bottom: 5rem; }
+      #about::before { display: none; }
+      .hero-bottom { grid-template-columns: 1fr; gap: 2rem; }
+      .section-header,
+      .edu-item,
+      .skill-row,
+      .project-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .section-num, .edu-year, .skill-cat, .project-num { display: none; }
+      .project-item::before { display: none; }
+      .edu-item:hover { margin: 0; padding-left: 0; padding-right: 0; }
+    }
+  </style>
+</head>
+<body class="lang-fr">
+
+  <nav>
+    <span class="nav-logo">Hmaidi Ayoub</span>
+    <ul class="nav-links">
+      <li><a href="#about"><span data-lang="fr">Accueil</span><span data-lang="en">About</span></a></li>
+      <li><a href="#education"><span data-lang="fr">Formation</span><span data-lang="en">Education</span></a></li>
+      <li><a href="#skills"><span data-lang="fr">Compétences</span><span data-lang="en">Skills</span></a></li>
+      <li><a href="#projects"><span data-lang="fr">Projets</span><span data-lang="en">Projects</span></a></li>
+    </ul>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+  </nav>
+
+  <main>
+
+    <section id="about">
+      <p class="hero-eyebrow">
+        <span data-lang="fr">Portfolio étudiant</span>
+        <span data-lang="en">Student portfolio</span>
+      </p>
+
+      <h1 class="hero-name">
+        Ayoub
+        <span class="surname">Hmaidi</span>
+      </h1>
+
+      <div class="hero-bottom">
+        <p class="hero-title">
+          <span data-lang="fr">Étudiant en Génie Informatique<br>ISITCOM · Hammam Sousse<br>Tunisie</span>
+          <span data-lang="en">Computer Engineering Student<br>ISITCOM · Hammam Sousse<br>Tunisia</span>
+        </p>
+        <p class="hero-bio">
+          <span data-lang="fr">Je suis Ayoub Hmaidi, étudiant en génie informatique à l’ISITCOM à Hammam Sousse, en Tunisie, avec un intérêt pour la création de solutions numériques pratiques et sécurisées. J’ai développé Keynest, un site web de gestion de mots de passe, ainsi que BudgetFlow, une application mobile Android de gestion de budget. J’aime transformer des idées en applications fiables et continuer à progresser à travers des projets concrets.</span>
+          <span data-lang="en">I’m Ayoub Hmaidi, a computer engineering student at ISITCOM in Hammam Sousse, Tunisia, focused on building practical and secure digital solutions. I created Keynest, a password manager website, and BudgetFlow, a personal budget management Android app. I enjoy turning ideas into clean, reliable applications and continuously improving my skills through hands-on projects.</span>
+        </p>
+      </div>
+
+      <div class="hero-links">
+        <a class="hero-link" href="mailto:hmaidiayoubb@gmail.com">Email</a>
+        <a class="hero-link" href="https://github.com/Ayoub81A/">GitHub</a>
+        <a class="hero-link" href="https://www.linkedin.com/in/ayoub-hmaidi-568a00346/">LinkedIn</a>
+      </div>
+    </section>
+
+    <section id="education" class="section">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2 class="section-title">
+          <span data-lang="fr">Forma<em>tion</em></span>
+          <span data-lang="en">Educa<em>tion</em></span>
+        </h2>
+      </div>
+
+      <div class="edu-item">
+        <span class="edu-year">2024<br>—<br>présent</span>
+        <div>
+          <p class="edu-degree"><span data-lang="fr">Licence en ingénierie d'informatique</span><span data-lang="en">B.Sc. in Computer Engineering</span></p>
+          <p class="edu-school">ISITCOM — Hammam Sousse, Tunisie</p>
+        </div>
+      </div>
+
+      <div class="edu-item">
+        <span class="edu-year">2023<br>—<br>2024</span>
+        <div>
+          <p class="edu-degree"><span data-lang="fr">Baccalauréat — Sciences de l'Informatique</span><span data-lang="en">High School Diploma — Computer Science</span></p>
+          <p class="edu-school"><span data-lang="fr">Lycée Chabeb— Manouba</span><span data-lang="en">Lycée Chabeb— Manouba</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ SKILLS ══ -->
+    <section id="skills" class="section">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2 class="section-title">
+          <span data-lang="fr">Compé<em>tences</em></span>
+          <span data-lang="en">Ski<em>lls</em></span>
+        </h2>
+      </div>
+
+      <div class="skill-row">
+        <span class="skill-cat"><span data-lang="fr">Langages</span><span data-lang="en">Languages</span></span>
+        <div class="skill-tags">
+          <span class="tag">Python</span><span class="tag">C</span><span class="tag">C++</span><span class="tag">Java</span>
+        </div>
+      </div>
+
+      <div class="skill-row">
+        <span class="skill-cat">Web</span>
+        <div class="skill-tags">
+          <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
+        </div>
+      </div>
+
+      <div class="skill-row">
+        <span class="skill-cat"><span data-lang="fr">Outils</span><span data-lang="en">Tools</span></span>
+        <div class="skill-tags">
+          <span class="tag">Git</span><span class="tag">Linux</span><span class="tag">VS Code</span>
+        </div>
+      </div>
+
+      <div class="skill-row">
+        <span class="skill-cat"><span data-lang="fr">Langues</span><span data-lang="en">Spoken</span></span>
+        <div class="skill-tags">
+          <span class="tag"><span data-lang="fr">Arabe — natif</span><span data-lang="en">Arabic — native</span></span>
+          <span class="tag"><span data-lang="fr">Français — intermédiaire</span><span data-lang="en">French — intermediate</span></span>
+          <span class="tag"><span data-lang="fr">Anglais — courant</span><span data-lang="en">English — fluent</span></span>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2 class="section-title">
+          <span data-lang="fr">Pro<em>jets</em></span>
+          <span data-lang="en">Pro<em>jects</em></span>
+        </h2>
+      </div>
+
+      <div class="project-item">
+        <span class="project-num">001</span>
+      <div>
+      <p class="project-type"><span data-lang="fr">Projet personnel</span><span data-lang="en">Personal project</span></p>
+      <p class="project-title">Keynest</p>
+      <p class="project-desc">
+      <span data-lang="fr">Gestionnaire de mots de passe sécurisé permettant de stocker, organiser et accéder à ses identifiants depuis une interface simple. Les données sont chiffrées localement pour garantir la confidentialité.</span>
+      <span data-lang="en">A secure password manager to store, organize and access credentials through a clean interface. Data is encrypted locally to ensure full privacy.</span></p>
+    <div class="project-tags">
+      <span class="tag">HTML</span>
+      <span class="tag">CSS</span>
+      <span class="tag">JavaScript</span>
+      <span class="tag">PHP</span>
+      </div>
+      <div class="project-links">
+        <a class="project-link" href="https://github.com/Ayoub81A/keynest">GitHub</a>
+      </div>
+      </div>
+      </div>
+
+      <!-- BUDGETFLOW -->
+<div class="project-item">
+  <span class="project-num">002</span>
+  <div>
+    <p class="project-type"><span data-lang="fr">Projet personnel</span><span data-lang="en">Personal project</span></p>
+    <p class="project-title">BudgetFlow</p>
+    <p class="project-desc">
+      <span data-lang="fr">Application de gestion budgétaire personnelle permettant de suivre les dépenses, visualiser les flux financiers et fixer des objectifs d'épargne. Interface intuitive avec tableaux de bord dynamiques.</span>
+      <span data-lang="en">A personal budget management app to track expenses, visualize cash flow and set savings goals. Features an intuitive dashboard with dynamic charts.</span>
+    </p>
+    <div class="project-tags">
+      <span class="tag">Java</span>
+      <span class="tag">XML</span>
+      <span class="tag">SQLite</span>
+      <span class="tag">Android Studio</span>
+    </div>
+    <div class="project-links">
+      <a class="project-link" href="https://github.com/Ayoub81A/budgetflow">GitHub</a>
+    </div>
+  </div>
+</div>
+      <!-- ✏️ END PROJECT BLOCK -->
+
+  </section>
+  </main>
+
+  <script>
+    function setLang(lang) {
+      document.body.className = 'lang-' + lang;
+      document.documentElement.lang = lang;
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === lang);
+      });
+    }
+  </script>
+
+</body>
+</html>
